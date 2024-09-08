@@ -27,12 +27,7 @@ cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_
 
 clf = cv2.CascadeClassifier(str(cascade_path))
 
-# camera = cv2.VideoCapture(0)
-camera = cv2.VideoCapture("Known_Video.mp4")
-
 VIDEO_URL = 'https://www.youtube.com/watch?v=eZMeG6o04eU'
-OUTPUT_DIR = 'video_frames'
-FRAME_SKIP = 30  # Extract every 30th frame
 
 def download_youtube_video(url, output_path):
     try:
@@ -48,7 +43,7 @@ def download_youtube_video(url, output_path):
         print(f"An error occurred while downloading the video: {e}")
         return None
 
-def extract_frames_from_video(video_path, output_dir, frame_skip=30):
+def detect_faces(video_path):
     if not os.path.isfile(video_path):
         print(f"Video file does not exist: {video_path}")
         return
@@ -57,12 +52,6 @@ def extract_frames_from_video(video_path, output_dir, frame_skip=30):
     if not cap.isOpened():
         print("Error opening video file")
         return
-
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    frame_count = 0
-    saved_frame_count = 0
 
     while True:
         _, frame = cap.read()
@@ -80,14 +69,13 @@ def extract_frames_from_video(video_path, output_dir, frame_skip=30):
         if cv2.waitKey(1) == ord("q"):
             break
     cap.release()
-    print(f"Extracted {saved_frame_count} frames to '{output_dir}'")
 
 def main():
     video_filename = download_youtube_video(VIDEO_URL, '.')
 
     if video_filename:
         # Extract frames from video
-        extract_frames_from_video(video_filename, OUTPUT_DIR, FRAME_SKIP)
+        detect_faces(video_filename)
 
         print("Face recognition completed.")
     else:
