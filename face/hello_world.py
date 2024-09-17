@@ -21,4 +21,10 @@
 # ./dist/hello_world.app/Contents/MacOS/hello_world
 # ./dist/face_detection.app/Contents/MacOS/face_detection
 
+## 5. Steps for iOS development
+# create apple dev account, no need to pay membership
+# in Xcode Settings > login with your dev acount
+# select your project and verify sigining is set
+# connect your iPhone on Mac and press "Run"
+
 print("Hello, world!")
